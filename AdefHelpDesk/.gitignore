@@ -231,3 +231,8 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+# App
+ADefHelpDeskApp
+ADefHelpDeskApp/ADefHelpDeskApp.dll
+ClientApp/package-lock.json
