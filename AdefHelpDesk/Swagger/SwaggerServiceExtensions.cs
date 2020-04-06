@@ -37,7 +37,7 @@ namespace AdefHelpDeskBase
                 });
 
                 // Set the comments path for the Swagger JSON and UI.                
-                var xmlPath = Path.GetFullPath(@"ADefHelpDeskApp\ADefHelpDeskApp.xml");
+                var xmlPath = Path.GetFullPath(@"ADefHelpDeskApp/ADefHelpDeskApp.xml");
                 c.IncludeXmlComments(xmlPath);
                 c.OperationFilter<FileUploadOperation>(); //Register File Upload Operation Filter
             });
