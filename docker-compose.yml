@@ -1,11 +1,6 @@
-version: '3.4'
+version: '3.7'
 
 services:
-#  app:
-#    image: ${DOCKER_REGISTRY-}adefhelpdeskbase
-#    build:
-#      context: .
-#      dockerfile: AdefHelpDesk/Dockerfile
   app:
     image: unifiedmicrosystems/adefhelpdesk:latest
 
