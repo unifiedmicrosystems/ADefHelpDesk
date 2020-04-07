@@ -61,7 +61,7 @@ namespace AdefHelpDeskBase.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IWritableOptions<ConnectionStrings> _connectionString;
         private IConfigurationRoot _configRoot { get; set; }
-        private readonly IHostingEnvironment _hostEnvironment;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
         public InstallWizardController(
             IOptions<ConnectionStrings> ConnectionStrings,
@@ -69,7 +69,7 @@ namespace AdefHelpDeskBase.Controllers
             SignInManager<ApplicationUser> signInManager,
             IWritableOptions<ConnectionStrings> connectionString,
             IConfigurationRoot configRoot,
-            IHostingEnvironment hostEnvironment)
+            IWebHostEnvironment hostEnvironment)
         {
             _DefaultConnection = ConnectionStrings.Value.DefaultConnection;
             _userManager = userManager;
@@ -411,7 +411,7 @@ namespace AdefHelpDeskBase.Controllers
         #endregion
 
         #region public static DTOStatus RunUpdateScripts(string _NewDatabaseVersion, IHostingEnvironment _hostEnvironment, string ConnectionString)
-        public static DTOStatus RunUpdateScripts(string _NewDatabaseVersion, IHostingEnvironment _hostEnvironment, string ConnectionString)
+        public static DTOStatus RunUpdateScripts(string _NewDatabaseVersion, IWebHostEnvironment _hostEnvironment, string ConnectionString)
         {
             DTOStatus objDTOStatus = new DTOStatus();
             objDTOStatus.Success = true;
@@ -578,7 +578,7 @@ namespace AdefHelpDeskBase.Controllers
         #endregion
 
         #region private static String GetSQLScript(string SQLScript, IHostingEnvironment _hostEnvironment)
-        private static String GetSQLScript(string SQLScript, IHostingEnvironment _hostEnvironment)
+        private static String GetSQLScript(string SQLScript, IWebHostEnvironment _hostEnvironment)
         {
             string strSQLScript;
             string strFilePath = _hostEnvironment.ContentRootPath + $@"\SQLScripts\{SQLScript}";

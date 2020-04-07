@@ -27,10 +27,10 @@ namespace AdefHelpDeskBase.Classes
     public class UpdateApplication
     {
         private string _UpgradeProcessDirectory;
-        private readonly IHostingEnvironment _hostEnvironment;
+        private readonly IWebHostEnvironment _hostEnvironment;
         private string _SystemFiles;
 
-        public UpdateApplication(IHostingEnvironment hostEnvironment)
+        public UpdateApplication(IWebHostEnvironment hostEnvironment)
         {
             _hostEnvironment = hostEnvironment;
 

@@ -24,7 +24,7 @@
             Task Detail object
             </summary>
         </member>
-        <member name="M:AdefHelpDeskBase.Controllers.WebInterface.V1Controller.#ctor(Microsoft.Extensions.Configuration.IConfigurationRoot,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.AspNetCore.Identity.UserManager{AdefHelpDeskBase.Models.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{AdefHelpDeskBase.Models.ApplicationUser},Microsoft.Extensions.Caching.Memory.IMemoryCache)">
+        <member name="M:AdefHelpDeskBase.Controllers.WebInterface.V1Controller.#ctor(Microsoft.Extensions.Configuration.IConfigurationRoot,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.AspNetCore.Identity.UserManager{AdefHelpDeskBase.Models.ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{AdefHelpDeskBase.Models.ApplicationUser},Microsoft.Extensions.Caching.Memory.IMemoryCache)">
             <summary>
             
             </summary>

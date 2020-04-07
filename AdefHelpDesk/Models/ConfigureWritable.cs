@@ -22,7 +22,7 @@ namespace AdefHelpDeskBase.Models
             services.Configure<T>(section);
             services.AddTransient<IWritableOptions<T>>(provider =>
             {
-                var environment = provider.GetService<IHostingEnvironment>();
+                var environment = provider.GetService<IWebHostEnvironment>();
                 var options = provider.GetService<IOptionsMonitor<T>>();
                 return new WritableOptions<T>(environment, options, section.Key, file);
             });
@@ -36,13 +36,13 @@ namespace AdefHelpDeskBase.Models
 
     public class WritableOptions<T> : IWritableOptions<T> where T : class, new()
     {
-        private readonly IHostingEnvironment _environment;
+        private readonly IWebHostEnvironment _environment;
         private readonly IOptionsMonitor<T> _options;
         private readonly string _section;
         private readonly string _file;
 
         public WritableOptions(
-            IHostingEnvironment environment,
+            IWebHostEnvironment environment,
             IOptionsMonitor<T> options,
             string section,
             string file)

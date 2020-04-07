@@ -30,6 +30,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IO;
@@ -40,7 +41,7 @@ namespace AdefHelpDeskBase
 {
     public partial class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             // Before we load the custom library (at: "ADefHelpDeskApp\ADefHelpDeskApp.dll")
             // (and potentially lock it)
@@ -109,7 +110,7 @@ namespace AdefHelpDeskBase
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -139,7 +140,7 @@ namespace AdefHelpDeskBase
             // from the external assembly availiable
             services.AddMvc()
                 .AddApplicationPart(ADefHelpDeskAppClassLibrary)
-                .AddJsonOptions(options =>
+                .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling =
                 Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
@@ -155,7 +156,7 @@ namespace AdefHelpDeskBase
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -174,16 +175,20 @@ namespace AdefHelpDeskBase
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
+            app.UseRouting();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             // Swagger
             app.UseSwaggerDocumentation();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                    pattern: "{controller}/{action=Index}/{id?}");
+
+                //endpoints.MapRazorPages();
             });
 
             app.UseSpa(spa =>

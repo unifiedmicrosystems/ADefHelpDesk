@@ -10,7 +10,7 @@ RUN echo "NPM Version:" && npm --version
 
 
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.1-stretch-slim AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 
 WORKDIR /app
 EXPOSE 80
@@ -18,7 +18,7 @@ EXPOSE 443
 
 
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.1-stretch AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 
 COPY --from=node_base . .
 WORKDIR /src

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
@@ -15,25 +16,33 @@ namespace AdefHelpDeskBase
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("internal", new Info { Title = "Internal API", Version = "v1" });
+                c.SwaggerDoc("internal", new OpenApiInfo { Title = "Internal API", Version = "v1" });
                 c.SwaggerDoc("external",
-                    new Info
+                    new OpenApiInfo
                     {
                         Title = "External API",
                         Version = "v1",
                         Description = "ADefHelpDesk Web API"
                     });
 
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
                     Name = "Authorization",
-                    In = "header",
-                    Type = "apiKey"
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey
                 });
-                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+
+                // Swagger 5.+ support
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
-                    { "Bearer", new string[] { } }
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                        },
+                        new string[] { }
+                    }
                 });
 
                 // Set the comments path for the Swagger JSON and UI.                
@@ -58,7 +67,7 @@ namespace AdefHelpDeskBase
 
         public class FileUploadOperation : IOperationFilter
         {
-            public void Apply(Operation operation, OperationFilterContext context)
+            public void Apply(OpenApiOperation operation, OperationFilterContext context)
             {
                 if (operation.Parameters != null)
                 {
@@ -68,7 +77,7 @@ namespace AdefHelpDeskBase
                     {
                         // Create a collection that does not have objFile
                         // because it will be added with an upload control
-                        List<IParameter> colIParameter = new List<IParameter>();
+                        List<OpenApiParameter> colIParameter = new List<OpenApiParameter>();
                         foreach (var item in operation.Parameters)
                         {
                             if (item.Name != "objFile")
@@ -80,15 +89,16 @@ namespace AdefHelpDeskBase
                         operation.Parameters.Clear();
                         operation.Parameters = colIParameter;
 
-                        operation.Parameters.Add(new NonBodyParameter
+                        operation.Parameters.Add(new OpenApiParameter
                         {
                             Name = "objFile",
-                            In = "formData",
+                            In = ParameterLocation.Query,
                             Description = "Upload File",
                             Required = false,
-                            Type = "file"
+                            Style = ParameterStyle.Form,
+                            //Type = "file"
                         });
-                        operation.Consumes.Add("multipart/form-data");
+                        //operation.Consumes.Add("multipart/form-data");
                     }
                 }
             }
