@@ -262,7 +262,7 @@ namespace AdefHelpDeskBase.Controllers
                 string strFullName = $"{paramFirstName} {paramLastName}";
 
                 // Get file and make replacements
-                string strEmailContents = System.IO.File.ReadAllText(_hostEnvironment.ContentRootPath + $@"\SystemFiles\Email-UserVerification.txt");
+                string strEmailContents = System.IO.File.ReadAllText(System.IO.Path.Combine(_hostEnvironment.ContentRootPath, "SystemFiles", "Email-UserVerification.txt").Replace(@"\", @"/"));
                 strEmailContents = strEmailContents.Replace("[strFullName]", strFullName);
                 strEmailContents = strEmailContents.Replace("[CurrentHostLocation]", CurrentHostLocation);
                 strEmailContents = strEmailContents.Replace("[paramUserName]", paramUserName);

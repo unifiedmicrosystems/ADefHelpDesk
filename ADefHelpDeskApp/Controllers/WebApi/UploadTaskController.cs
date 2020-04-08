@@ -232,7 +232,7 @@ namespace ADefHelpDeskApp.Controllers
 
                 if (NotificationType == Constants.NotifyNewTask)
                 {
-                    strEmailContents = System.IO.File.ReadAllText(ContentRootPath + $@"\SystemFiles\Email-Admin-NewTask.txt");
+                    strEmailContents = System.IO.File.ReadAllText(Path.Combine(ContentRootPath, "SystemFiles", "Email-Admin-NewTask.txt").Replace(@"\", @"/"));
                     strEmailContents = strEmailContents.Replace("[strFullName]", strFullName);
                     strEmailContents = strEmailContents.Replace("[strAssignedRole]", strAssignedRole);
                     strEmailContents = strEmailContents.Replace("[objTask.taskId.Value]", objTask.taskId.Value.ToString());
@@ -245,7 +245,7 @@ namespace ADefHelpDeskApp.Controllers
 
                 if (NotificationType == Constants.NotifyUpdateTaskDetail)
                 {
-                    strEmailContents = System.IO.File.ReadAllText(ContentRootPath + $@"\SystemFiles\Email-Admin-UpdateTask.txt");
+                    strEmailContents = System.IO.File.ReadAllText(Path.Combine(ContentRootPath, "SystemFiles", "Email-Admin-UpdateTask.txt").Replace(@"\", @"/"));
                     strEmailContents = strEmailContents.Replace("[strFullName]", strFullName);
                     strEmailContents = strEmailContents.Replace("[strAssignedRole]", strAssignedRole);
                     strEmailContents = strEmailContents.Replace("[objTask.taskId.Value]", objTask.taskId.Value.ToString());
@@ -329,7 +329,7 @@ namespace ADefHelpDeskApp.Controllers
                 // Send user the Email
                 string strFullName = $"{objDTOUser.firstName} {objDTOUser.lastName}";
 
-                string strEmailContents = System.IO.File.ReadAllText(ContentRootPath + $@"\SystemFiles\Email-SuperUser-NewTask.txt");
+                string strEmailContents = System.IO.File.ReadAllText(Path.Combine(ContentRootPath, "SystemFiles", "Email-SuperUser-NewTask.txt").Replace(@"\", @"/"));
                 strEmailContents = strEmailContents.Replace("[strFullName]", strFullName);
                 strEmailContents = strEmailContents.Replace("[objTask.taskId.Value]", objTask.taskId.Value.ToString());
                 strEmailContents = strEmailContents.Replace("[objTask.description]", objTask.description);
@@ -426,7 +426,7 @@ namespace ADefHelpDeskApp.Controllers
             string strEmailContents = "";
             if (NotificationType == Constants.NotifyNewTask)
             {
-                strEmailContents = System.IO.File.ReadAllText(ContentRootPath + $@"\SystemFiles\Email-User-NewTask.txt");
+                strEmailContents = System.IO.File.ReadAllText(Path.Combine(ContentRootPath, "SystemFiles", "Email-User-NewTask.txt").Replace(@"\", @"/"));
                 strEmailContents = strEmailContents.Replace("[strFullName]", strFullName);
                 strEmailContents = strEmailContents.Replace("[objTask.taskId.Value]", objTask.taskId.Value.ToString());
                 strEmailContents = strEmailContents.Replace("[objTask.description]", objTask.description);
@@ -439,7 +439,7 @@ namespace ADefHelpDeskApp.Controllers
 
             if (NotificationType == Constants.NotifyUpdateTaskDetail)
             {
-                strEmailContents = System.IO.File.ReadAllText(ContentRootPath + $@"\SystemFiles\Email-User-UpdateTask.txt");
+                strEmailContents = System.IO.File.ReadAllText(Path.Combine(ContentRootPath, "SystemFiles", "Email-User-UpdateTask.txt").Replace(@"\", @"/"));
                 strEmailContents = strEmailContents.Replace("[strFullName]", strFullName);
                 strEmailContents = strEmailContents.Replace("[objTask.taskId.Value]", objTask.taskId.Value.ToString());
                 strEmailContents = strEmailContents.Replace("[objTask.colDTOTaskDetail.FirstOrDefault().detailId]", objTask.colDTOTaskDetail.FirstOrDefault().detailId.ToString());
@@ -1466,7 +1466,7 @@ namespace ADefHelpDeskApp.Controllers
         private static void DeleteExistingFile(AdefHelpDeskAttachments objAttachment, string strCurrentUser, string ConnectionString)
         {
             // Construct path
-            string FullPath = Path.Combine(objAttachment.AttachmentPath, objAttachment.FileName);
+            string FullPath = Path.Combine(objAttachment.AttachmentPath, objAttachment.FileName).Replace(@"\", @"/");
 
             // Delete file if it exists
             if (System.IO.File.Exists(FullPath))

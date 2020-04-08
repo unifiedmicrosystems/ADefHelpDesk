@@ -74,14 +74,16 @@ public static class FileUtility
             // Standard Files
             using (var readStream = objFile.OpenReadStream())
             {
+                var path = Path.Combine(objGeneralSettings.FileUploadPath, strUploadedFileName).Replace(@"\", @"/");
+
                 // Delete file if it exists
-                if (System.IO.File.Exists(objGeneralSettings.FileUploadPath + @"\" + strUploadedFileName))
+                if (File.Exists(path))
                 {
-                    System.IO.File.Delete(objGeneralSettings.FileUploadPath + @"\" + strUploadedFileName);
+                    File.Delete(path);
                 }
 
                 // Save file 
-                using (FileStream fs = System.IO.File.Create(objGeneralSettings.FileUploadPath + @"\" + strUploadedFileName))
+                using (FileStream fs = File.Create(path))
                 {
                     objFile.CopyTo(fs);
                     fs.Flush();

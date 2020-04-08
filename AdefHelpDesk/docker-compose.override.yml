@@ -10,8 +10,6 @@ services:
     ports:
       - "9001:80"
       - "9000:443"
-      - "9051:5000"
-      - "9050:5001"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

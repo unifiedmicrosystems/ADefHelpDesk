@@ -61,16 +61,12 @@ namespace ADefHelpDeskApp.Controllers
             _hostEnvironment = hostEnvironment;
 
             // Set WebRootPath to wwwroot\Files directory
-            _DefaultFilesPath =
-                System.IO.Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    @"wwwroot\Files");
+            _DefaultFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Files").Replace(@"\", @"/");
 
             // Create wwwroot\Files directory if needed
             if (!Directory.Exists(_DefaultFilesPath))
             {
-                DirectoryInfo di =
-                    Directory.CreateDirectory(_DefaultFilesPath);
+                _ = Directory.CreateDirectory(_DefaultFilesPath);
             }
         }
 
@@ -90,7 +86,7 @@ namespace ADefHelpDeskApp.Controllers
                 GeneralSettings objGeneralSettings = new GeneralSettings(GetConnectionString());
 
                 // Get file and make replacements
-                objDTOApplicationSetting.termsOfUse = System.IO.File.ReadAllText(_hostEnvironment.ContentRootPath + $@"\SystemFiles\TermsOfUse.txt");
+                objDTOApplicationSetting.termsOfUse = System.IO.File.ReadAllText(Path.Combine(_hostEnvironment.ContentRootPath, "SystemFiles", "TermsOfUse.txt").Replace(@"\", @"/"));
                 objDTOApplicationSetting.termsOfUse = objDTOApplicationSetting.termsOfUse.Replace("[SITE NAME]", objGeneralSettings.ApplicationName);
                 objDTOApplicationSetting.termsOfUse = objDTOApplicationSetting.termsOfUse.Replace("[EMAIL ADDRESS]", objGeneralSettings.SMTPFromEmail);
                 objDTOApplicationSetting.termsOfUse = objDTOApplicationSetting.termsOfUse.Replace("[YEAR]", DateTime.Now.Year.ToString());
@@ -122,7 +118,7 @@ namespace ADefHelpDeskApp.Controllers
                 GeneralSettings objGeneralSettings = new GeneralSettings(GetConnectionString());
 
                 // Get file and make replacements
-                objDTOApplicationSetting.privacyStatement = System.IO.File.ReadAllText(_hostEnvironment.ContentRootPath + $@"\SystemFiles\PrivacyStatement.txt");
+                objDTOApplicationSetting.privacyStatement = System.IO.File.ReadAllText(Path.Combine(_hostEnvironment.ContentRootPath, "SystemFiles", "PrivacyStatement.txt").Replace(@"\", @"/"));
                 objDTOApplicationSetting.privacyStatement = objDTOApplicationSetting.privacyStatement.Replace("[SITE NAME]", objGeneralSettings.ApplicationName);
                 objDTOApplicationSetting.privacyStatement = objDTOApplicationSetting.privacyStatement.Replace("[EMAIL ADDRESS]", objGeneralSettings.SMTPFromEmail);
                 objDTOApplicationSetting.privacyStatement = objDTOApplicationSetting.privacyStatement.Replace("[YEAR]", DateTime.Now.Year.ToString());

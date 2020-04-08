@@ -35,26 +35,21 @@ namespace AdefHelpDeskBase.Classes
             _hostEnvironment = hostEnvironment;
 
             // Set _SystemFiles 
-            _SystemFiles =
-                System.IO.Path.Combine(
-                    hostEnvironment.ContentRootPath,
-                    "SystemFiles");
+            _SystemFiles = Path.Combine(hostEnvironment.ContentRootPath, "SystemFiles");
 
             // Create SystemFiles directory if needed
             if (!Directory.Exists(_SystemFiles))
             {
-                DirectoryInfo di =
-                    Directory.CreateDirectory(_SystemFiles);
+                _ = Directory.CreateDirectory(_SystemFiles);
             }
 
             // Set _UpgradeProcessDirectory
-            _UpgradeProcessDirectory = _SystemFiles + $@"\UpgradeProcess";
+            _UpgradeProcessDirectory = Path.Combine(_SystemFiles, "UpgradeProcess");
 
             // Create wwwroot\Upgrade\UpgradeProcess directory if needed
             if (!Directory.Exists(_UpgradeProcessDirectory))
             {
-                DirectoryInfo di =
-                    Directory.CreateDirectory(_UpgradeProcessDirectory);
+                _ = Directory.CreateDirectory(_UpgradeProcessDirectory);
             }
         }
 
@@ -81,17 +76,19 @@ namespace AdefHelpDeskBase.Classes
             DirectoryInfo CurrentDirectory = new DirectoryInfo(targetDirectory);
             foreach (var file in CurrentDirectory.GetFiles())
             {
+                var path = Path.Combine(_hostEnvironment.ContentRootPath, CurrentSubPath, file.Name);
+
                 // If the file is an assembly try to delete it first
                 if (file.Extension == ".dll")
                 {
-                    if (System.IO.File.Exists(_hostEnvironment.ContentRootPath + $@"{CurrentSubPath}\{file.Name}"))
+                    if (File.Exists(path))
                     {
-                        System.IO.File.Delete(_hostEnvironment.ContentRootPath + $@"{CurrentSubPath}\{file.Name}");
+                        File.Delete(path);
                     }
                 }
 
                 // Copy file to final location
-                file.CopyTo(_hostEnvironment.ContentRootPath + $@"{CurrentSubPath}\{file.Name}", true);
+                file.CopyTo(path, true);
             }
 
             // Recurse into subdirectories of this directory.

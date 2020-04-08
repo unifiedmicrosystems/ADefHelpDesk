@@ -60,10 +60,7 @@ namespace AdefHelpDeskBase.Controllers
             _hostEnvironment = hostEnvironment;
 
             // Set _SystemFiles 
-            _SystemFiles =
-                System.IO.Path.Combine(
-                    hostEnvironment.ContentRootPath,
-                    "SystemFiles");
+            _SystemFiles = Path.Combine(hostEnvironment.ContentRootPath, "SystemFiles").Replace(@"\", @"/");
 
             // Create SystemFiles directory if needed
             if (!Directory.Exists(_SystemFiles))
@@ -73,7 +70,7 @@ namespace AdefHelpDeskBase.Controllers
             }
 
             // Set _UpgradeProcessDirectory
-            _UpgradeProcessDirectory = _SystemFiles + $@"\UpgradeProcess";
+            _UpgradeProcessDirectory = Path.Combine(_SystemFiles, "UpgradeProcess").Replace(@"\", @"/");
         }
 
         // api/Upload
@@ -88,9 +85,9 @@ namespace AdefHelpDeskBase.Controllers
                 return Ok();
             }
 
-            string FileNameAndPath = _SystemFiles + $@"\UpgradePackage.zip";
-            string WebConfigOrginalFileNameAndPath = _hostEnvironment.ContentRootPath + @"\Web.config";
-            string WebConfigTempFileNameAndPath = _hostEnvironment.ContentRootPath + @"\Web.config.txt";
+            string FileNameAndPath = Path.Combine(_SystemFiles, "UpgradePackage.zip").Replace(@"\", @"/");
+            string WebConfigOrginalFileNameAndPath = Path.Combine(_hostEnvironment.ContentRootPath, "Web.config").Replace(@"\", @"/");
+            string WebConfigTempFileNameAndPath = Path.Combine(_hostEnvironment.ContentRootPath, "Web.config.txt").Replace(@"\", @"/");
 
             try
             {
@@ -258,7 +255,7 @@ namespace AdefHelpDeskBase.Controllers
         private DTOVersion ReadManifest(DTOVersion objVersion)
         {
             string strManifest;
-            string strFilePath = _UpgradeProcessDirectory + $@"\Manifest.json";
+            string strFilePath = Path.Combine(_UpgradeProcessDirectory, "Manifest.json").Replace(@"\", @"/");
             using (StreamReader reader = new StreamReader(strFilePath))
             {
                 strManifest = reader.ReadToEnd();

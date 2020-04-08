@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   app:
-    image: ${DOCKER_REGISTRY-}adefhelpdeskbase
+    image: ${DOCKER_REGISTRY-}adefhelpdesk.dev
     build:
       context: .
       dockerfile: Dockerfile

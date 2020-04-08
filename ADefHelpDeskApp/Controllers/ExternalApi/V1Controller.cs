@@ -87,9 +87,7 @@ namespace AdefHelpDeskBase.Controllers.WebInterface
 
             // Set _SystemFiles 
             _SystemFiles =
-                System.IO.Path.Combine(
-                    hostEnvironment.ContentRootPath,
-                    "SystemFiles");
+                System.IO.Path.Combine(hostEnvironment.ContentRootPath, "SystemFiles").Replace(@"\", @"/");
 
             // Create SystemFiles directory if needed
             if (!Directory.Exists(_SystemFiles))

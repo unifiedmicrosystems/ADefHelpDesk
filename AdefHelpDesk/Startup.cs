@@ -125,7 +125,7 @@ namespace AdefHelpDeskBase
             // This uses ApplicationParts
             // https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/app-parts
             // Also see: https://github.com/aspnet/Mvc/issues/4572
-            var path = Path.GetFullPath(@"ADefHelpDeskApp/ADefHelpDeskApp.dll");
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ADefHelpDeskApp", "ADefHelpDeskApp.dll");
             var ADefHelpDeskAppClassLibrary = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
 
             // Add Database Services

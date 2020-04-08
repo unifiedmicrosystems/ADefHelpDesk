@@ -79,24 +79,17 @@ namespace AdefHelpDeskBase.Controllers
             _hostEnvironment = hostEnvironment;
 
             // Set WebRootPath to wwwroot\Files directory
-            _hostEnvironment.WebRootPath =
-                System.IO.Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    @"wwwroot");
+            _hostEnvironment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot").Replace(@"\", @"/");
 
             // We need to create a Files directory if none exists
             // This will be used if the Administrator does not set a Files directory
             // Set WebRootPath to wwwroot\Files directory
-            _DefaultFilesPath =
-                System.IO.Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    @"wwwroot\Files");
+            _DefaultFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Files").Replace(@"\", @"/");
 
             // Create wwwroot\Files directory if needed
             if (!Directory.Exists(_DefaultFilesPath))
             {
-                DirectoryInfo di =
-                    Directory.CreateDirectory(_DefaultFilesPath);
+                _ = Directory.CreateDirectory(_DefaultFilesPath);
             }
         }
 
@@ -581,7 +574,7 @@ namespace AdefHelpDeskBase.Controllers
         private static String GetSQLScript(string SQLScript, IWebHostEnvironment _hostEnvironment)
         {
             string strSQLScript;
-            string strFilePath = _hostEnvironment.ContentRootPath + $@"\SQLScripts\{SQLScript}";
+            string strFilePath = Path.Combine(_hostEnvironment.ContentRootPath, "SQLScripts", SQLScript).Replace(@"\", @"/");
             using (StreamReader reader = new StreamReader(strFilePath))
             {
                 strSQLScript = reader.ReadToEnd();
@@ -622,20 +615,17 @@ namespace AdefHelpDeskBase.Controllers
         {
             // Temporarily rename the web.config file
             // to release the locks on any assemblies
-            string WebConfigOrginalFileNameAndPath =
-                _hostEnvironment.ContentRootPath + @"\Web.config";
-            string WebConfigTempFileNameAndPath =
-                _hostEnvironment.ContentRootPath + @"\Web.config.txt";
+            string WebConfigOrginalFileNameAndPath = Path.Combine(_hostEnvironment.ContentRootPath, "Web.config").Replace(@"\", @"/");
+            string WebConfigTempFileNameAndPath = Path.Combine(_hostEnvironment.ContentRootPath, "Web.config.txt").Replace(@"\", @"/");
 
-            System.IO.File.Copy(WebConfigOrginalFileNameAndPath,
-                WebConfigTempFileNameAndPath);
+            System.IO.File.Copy(WebConfigOrginalFileNameAndPath, WebConfigTempFileNameAndPath);
             System.IO.File.Delete(WebConfigOrginalFileNameAndPath);
             // Give the site time to release locks on the assemblies
             Task.Delay(2000).Wait(); // Wait 2 seconds with blocking
                                      // Rename the temp web.config file back to web.config
                                      // so the site will be active again
-            System.IO.File.Copy(WebConfigTempFileNameAndPath,
-                WebConfigOrginalFileNameAndPath);
+
+            System.IO.File.Copy(WebConfigTempFileNameAndPath, WebConfigOrginalFileNameAndPath);
             System.IO.File.Delete(WebConfigTempFileNameAndPath);
 
             // Finally a Config Reload

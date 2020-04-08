@@ -55,10 +55,7 @@ namespace AdefHelpDeskBase.Controllers
             _hostEnvironment = hostEnvironment;
 
             // Set _SystemFiles 
-            _SystemFiles =
-                System.IO.Path.Combine(
-                    hostEnvironment.ContentRootPath,
-                    "SystemFiles");
+            _SystemFiles = Path.Combine(hostEnvironment.ContentRootPath, "SystemFiles").Replace(@"\", @"/");
 
             // Create SystemFiles directory if needed
             if (!Directory.Exists(_SystemFiles))
@@ -98,7 +95,7 @@ namespace AdefHelpDeskBase.Controllers
                 {
                     var filename = file.FileName.Replace("\"","").ToString();
 
-                    filename = _SystemFiles + $@"\{SelectedFolder}\{filename}";
+                    filename = Path.Combine(_SystemFiles, SelectedFolder, filename).Replace(@"\", @"/");
 
                     //Save file to harddrive
                     using (FileStream fs = System.IO.File.Create(filename))

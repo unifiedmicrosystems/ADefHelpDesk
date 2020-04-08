@@ -402,7 +402,7 @@ namespace AdefHelpDeskBase.Controllers
                         if (Path.GetExtension(itemAttachmement.OriginalFileName).ToUpper() == Constants.EML)
                         {
                             // Construct path
-                            string FullFilePath = Path.Combine(itemAttachmement.AttachmentPath, itemAttachmement.FileName);
+                            string FullFilePath = Path.Combine(itemAttachmement.AttachmentPath, itemAttachmement.FileName).Replace(@"\", @"/");
                             // Set Email Description and ContentType
                             SetEmailContents(itemAttachmement.FileName, itemAttachmement.AttachmentId, FullFilePath, DefaultConnection, ref objDTOTaskDetail);
                             objDTOTaskDetail.contentType = Constants.EML.Replace(".", "");
@@ -578,7 +578,7 @@ namespace AdefHelpDeskBase.Controllers
             else
             {
                 // Construct path
-                string FullPath = Path.Combine(objAttachment.AttachmentPath, objAttachment.FileName);
+                string FullPath = Path.Combine(objAttachment.AttachmentPath, objAttachment.FileName).Replace(@"\", @"/");
 
                 // Delete file if it exists
                 if (System.IO.File.Exists(FullPath))

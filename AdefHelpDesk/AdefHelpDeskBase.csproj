@@ -51,6 +51,9 @@
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Views\_ViewImports.cshtml" />
     <None Include="Views\_ViewStart.cshtml" />
+	<None Include="docker-compose.override.yml">
+	  <DependentUpon>docker-compose.yml</DependentUpon>
+	</None>
   </ItemGroup>
 
   <ItemGroup>
@@ -63,25 +66,25 @@
     <None Update="SQLScripts\01.00.00.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="SQLScripts\02.10.00.Sql">
+    <None Update="SQLScripts\02.10.00.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="SQLScripts\03.10.00.Sql">
+    <None Update="SQLScripts\03.10.00.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="SQLScripts\03.20.00.Sql">
+    <None Update="SQLScripts\03.20.00.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="SQLScripts\03.30.00.Sql">
+    <None Update="SQLScripts\03.30.00.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="SQLScripts\04.10.00.Sql">
+    <None Update="SQLScripts\04.10.00.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="SQLScripts\04.00.00.Sql">
+    <None Update="SQLScripts\04.00.00.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="SQLScripts\04.20.00.Sql">
+    <None Update="SQLScripts\04.20.00.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="SystemFiles\Email-Admin-NewTask.txt">

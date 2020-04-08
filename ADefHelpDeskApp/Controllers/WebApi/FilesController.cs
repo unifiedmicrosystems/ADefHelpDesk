@@ -59,10 +59,7 @@ namespace AdefHelpDeskBase.Controllers
             _hostEnvironment = hostEnvironment;
 
             // Set _SystemFiles 
-            _SystemFiles =
-                System.IO.Path.Combine(
-                    hostEnvironment.ContentRootPath,
-                    "SystemFiles");
+            _SystemFiles = Path.Combine(hostEnvironment.ContentRootPath, "SystemFiles").Replace(@"\", @"/");
 
             // Create SystemFiles directory if needed
             if (!Directory.Exists(_SystemFiles))
@@ -148,7 +145,7 @@ namespace AdefHelpDeskBase.Controllers
             try
             {
                 // Construct path
-                string FullPath = Path.Combine(_SystemFiles, paramDTONode.data);
+                string FullPath = Path.Combine(_SystemFiles, paramDTONode.data).Replace(@"\", @"/");
 
                 // Get file
                 if (System.IO.File.Exists(FullPath))
@@ -209,7 +206,7 @@ namespace AdefHelpDeskBase.Controllers
                             }
                             else
                             {
-                                FullPath = Path.Combine(objAttachment.AttachmentPath, objAttachment.FileName);
+                                FullPath = Path.Combine(objAttachment.AttachmentPath, objAttachment.FileName).Replace(@"\", @"/");
                             }
 
                             // See if this is a file in an .Eml file
@@ -290,7 +287,7 @@ namespace AdefHelpDeskBase.Controllers
             }
 
             // Return missing file
-            string strPath = Path.Combine(_SystemFiles, "MissingFile.html");
+            string strPath = Path.Combine(_SystemFiles, "MissingFile.html").Replace(@"\", @"/");
             var missingFileContents = System.IO.File.ReadAllBytes(strPath);
 
             objDTOFile.Buffer = missingFileContents;
