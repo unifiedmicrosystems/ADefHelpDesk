@@ -51,9 +51,6 @@
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Views\_ViewImports.cshtml" />
     <None Include="Views\_ViewStart.cshtml" />
-	<None Include="docker-compose.override.yml">
-	  <DependentUpon>docker-compose.yml</DependentUpon>
-	</None>
   </ItemGroup>
 
   <ItemGroup>

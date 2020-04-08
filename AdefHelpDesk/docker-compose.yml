@@ -6,3 +6,20 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=<add_password>
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/<add_certificate_name>.pfx
+    ports:
+      - "9001:80"
+      - "9000:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+    network_mode: bridge
+    hostname: <hostname>
+    extra_hosts:
+      - "localhost:<add_ip_address>"
